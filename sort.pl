@@ -9,18 +9,18 @@ my $number;
 GetOptions (
     'number=i' => \$number
     ) or die "Usage: $0 --number <number of records>";
-    
-    print " we want $number records please\n";
 
     my $path_to_file = './numbers';
-    open my $handle, '<', $path_to_file;
-
+    open my $handle, '<', $path_to_file or die $!;
 
 chomp(my @numbers = <$handle>);
 my @reversenumbers = reverse @numbers;
+@numbers=();
+close $handle;
 
 my @results = splice @reversenumbers, 0 , $number;
 
 foreach my $result(@results) {
-    print "$result\n"
+    my $resulttoprint = sprintf ("%.10g", $result);
+    print "$resulttoprint\n"
 }
